@@ -1,148 +1,80 @@
 <!DOCTYPE html>
 <html lang="en">
-<head><style>
-
-.resultBox{
-background:#f4f6f8;
-padding:16px;
-border-radius:8px;
-margin-bottom:20px;
-}
-
-.signals{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
-gap:16px;
-}
-
-.signal{
-background:white;
-border:1px solid #ddd;
-border-radius:8px;
-padding:14px;
-}
-
-.scopeMeaning{
-font-size:13px;
-color:#666;
-margin-bottom:8px;
-}
-
-</style>
+<head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>MeaningBuddy</title>
   <style>
+    :root {
+      --bg: #f4f6f8;
+      --panel: #ffffff;
+      --text: #1f2933;
+      --muted: #52606d;
+      --border: #d9e2ec;
+      --accent: #2563eb;
+      --accent-hover: #1d4ed8;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
     body {
-      font-family: Arial, sans-serif;
       margin: 0;
-      background: #f4f6f8;
-      color: #1f2933;
+      font-family: Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
     }
 
     .page {
-      max-width: 1100px;
+      max-width: 980px;
       margin: 0 auto;
       padding: 32px 20px 48px;
     }
 
     h1 {
-      margin-bottom: 8px;
+      margin: 0 0 10px;
+      font-size: 2rem;
     }
 
     .subtitle {
-      color: #52606d;
-      margin-bottom: 24px;
+      margin: 0 0 24px;
+      color: var(--muted);
       max-width: 760px;
+      font-size: 1.05rem;
     }
 
     .panel {
-      background: white;
-      border: 1px solid #d9e2ec;
+      background: var(--panel);
+      border: 1px solid var(--border);
       border-radius: 12px;
       padding: 20px;
       margin-bottom: 20px;
     }
 
-    .input-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 16px;
-    }
-
     label {
       display: block;
-      font-weight: 600;
       margin-bottom: 8px;
+      font-weight: 600;
     }
 
-    textarea {<div id="results" style="margin-top:30px">
-
-<h2>Plain Meaning</h2>
-<div id="plainMeaning" class="resultBox">
-The explanation will appear here.
-</div>
-
-<h2>Language Signals</h2>
-
-<div class="signals">
-
-<div class="signal">
-<h3>Actor</h3>
-<p class="scopeMeaning">Who has the authority or responsibility.</p>
-<p id="actorResult"></p>
-</div>
-
-<div class="signal">
-<h3>Rule Strength</h3>
-<p class="scopeMeaning">Whether the action is required or optional.</p>
-<p id="ruleStrengthResult"></p>
-</div>
-
-<div class="signal">
-<h3>Scope</h3>
-<p class="scopeMeaning">Who or what the rule applies to.</p>
-<p id="scopeResult"></p>
-</div>
-
-<div class="signal">
-<h3>Action</h3>
-<p class="scopeMeaning">What the sentence tells someone to do.</p>
-<p id="actionResult"></p>
-</div>
-
-<div class="signal">
-<h3>Timing</h3>
-<p class="scopeMeaning">Deadline or level of flexibility.</p>
-<p id="timingResult"></p>
-</div>
-
-<div class="signal">
-<h3>Vague Language</h3>
-<p class="scopeMeaning">Words that allow interpretation or discretion.</p>
-<p id="vagueResult"></p>
-</div>
-
-</div>
-
-<h2>Operational Effect</h2>
-<div id="effectResult" class="resultBox"></div>
-
-</div>
+    textarea {
       width: 100%;
       min-height: 220px;
-      padding: 12px;
-      border: 1px solid #d9e2ec;
-      border-radius: 10px;
       resize: vertical;
+      padding: 14px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
       font: inherit;
-      box-sizing: border-box;
+      color: var(--text);
+      background: #fff;
     }
 
     .button-row {
       display: flex;
       gap: 12px;
-      margin-top: 16px;
+      margin-top: 14px;
       flex-wrap: wrap;
     }
 
@@ -155,53 +87,77 @@ The explanation will appear here.
     }
 
     .primary {
-      background: #2563eb;
+      background: var(--accent);
       color: white;
+    }
+
+    .primary:hover {
+      background: var(--accent-hover);
     }
 
     .secondary {
       background: #e5e7eb;
-      color: #1f2933;
+      color: var(--text);
     }
 
-    .results-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 16px;
+    .secondary:hover {
+      background: #d1d5db;
     }
 
-    .result-box {
-      background: white;
-      border: 1px solid #d9e2ec;
-      border-radius: 12px;
+    h2 {
+      margin: 0 0 10px;
+      font-size: 1.2rem;
+    }
+
+    .helper {
+      margin: 0 0 14px;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .resultBox {
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      border-radius: 10px;
       padding: 16px;
-      min-height: 140px;
+      margin-bottom: 20px;
+      min-height: 64px;
     }
 
-    .result-box h3 {
-      margin-top: 0;
-      margin-bottom: 10px;
+    .signals {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+      margin-bottom: 20px;
     }
 
-    .full {
-      grid-column: 1 / -1;
+    .signal {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px;
+      min-height: 120px;
+    }
+
+    .signal h3 {
+      margin: 0 0 6px;
+      font-size: 1rem;
+    }
+
+    .scopeMeaning {
+      margin: 0 0 8px;
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+
+    .signalValue {
+      margin: 0;
+      font-size: 0.98rem;
     }
 
     .empty {
-      color: #52606d;
+      color: var(--muted);
       font-style: italic;
-    }
-
-    ul {
-      margin: 0;
-      padding-left: 20px;
-    }
-
-    @media (max-width: 800px) {
-      .input-grid,
-      .results-grid {
-        grid-template-columns: 1fr;
-      }
     }
   </style>
 </head>
@@ -209,361 +165,232 @@ The explanation will appear here.
   <main class="page">
     <h1>MeaningBuddy</h1>
     <p class="subtitle">
-      Compare two versions of text and show what changed in plain language.
+      Turn formal, abstract, or legal wording into plain meaning.
     </p>
 
     <section class="panel">
-      <div class="input-grid">
-        <div>
-          <label for="originalText">Original Text</label>
-          <textarea id="originalText" placeholder="Paste the earlier version here..."></textarea>
-        </div>
-
-        <div>
-          <label for="revisedText">Revised Text</label>
-          <textarea id="revisedText" placeholder="Paste the updated version here..."></textarea>
-        </div>
-      </div>
+      <label for="inputText">Paste Text</label>
+      <textarea id="inputText" placeholder="Paste a sentence, paragraph, legal notice, policy text, or formal wording here..."></textarea>
 
       <div class="button-row">
-        <button class="primary" id="compareBtn">Compare</button>
+        <button class="primary" id="analyzeBtn">Analyze Language</button>
         <button class="secondary" id="clearBtn">Clear</button>
       </div>
     </section>
 
-    <section class="results-grid">
-      <div class="result-box full">
-        <h3>Summary</h3>
-        <div id="summary" class="empty">No comparison yet.</div>
+    <section class="panel">
+      <h2>Plain Meaning</h2>
+      <p class="helper">What the text is saying in direct language.</p>
+      <div id="plainMeaning" class="resultBox empty">The explanation will appear here.</div>
+
+      <h2>Language Signals</h2>
+      <p class="helper">The parts of the sentence that control how the wording works.</p>
+
+      <div class="signals">
+        <div class="signal">
+          <h3>Actor / Authority</h3>
+          <p class="scopeMeaning">Who has the power or responsibility in the sentence.</p>
+          <p id="actorResult" class="signalValue empty">No signal yet.</p>
+        </div>
+
+        <div class="signal">
+          <h3>Rule Strength</h3>
+          <p class="scopeMeaning">Whether the action is required, optional, or recommended.</p>
+          <p id="ruleStrengthResult" class="signalValue empty">No signal yet.</p>
+        </div>
+
+        <div class="signal">
+          <h3>Scope</h3>
+          <p class="scopeMeaning">Who or what the rule applies to.</p>
+          <p id="scopeResult" class="signalValue empty">No signal yet.</p>
+        </div>
+
+        <div class="signal">
+          <h3>Action</h3>
+          <p class="scopeMeaning">What action the text is describing.</p>
+          <p id="actionResult" class="signalValue empty">No signal yet.</p>
+        </div>
+
+        <div class="signal">
+          <h3>Timing / Standard</h3>
+          <p class="scopeMeaning">The deadline, threshold, or level of flexibility.</p>
+          <p id="timingResult" class="signalValue empty">No signal yet.</p>
+        </div>
+
+        <div class="signal">
+          <h3>Vague / Flexible Language</h3>
+          <p class="scopeMeaning">Words that leave room for interpretation or discretion.</p>
+          <p id="vagueResult" class="signalValue empty">No signal yet.</p>
+        </div>
       </div>
 
-      <div class="result-box">
-        <h3>Detected Changes</h3>
-        <div id="changes" class="empty">No detected changes yet.</div>
-      </div>
-
-      <div class="result-box">
-        <h3>Structural Categories</h3>
-        <div id="categories" class="empty">No categories yet.</div>
-      </div>
-
-      <div class="result-box full">
-        <h3>Operational Effect</h3>
-        <div id="effect" class="empty">No operational effect yet.</div>
-      </div>
+      <h2>Operational Effect</h2>
+      <p class="helper">What this wording means in practice.</p>
+      <div id="effectResult" class="resultBox empty">Operational effect will appear here.</div>
     </section>
   </main>
 
   <script>
-    const originalText = document.getElementById("originalText");
-    const revisedText = document.getElementById("revisedText");
-    const compareBtn = document.getElementById("compareBtn");
+    const inputText = document.getElementById("inputText");
+    const analyzeBtn = document.getElementById("analyzeBtn");
     const clearBtn = document.getElementById("clearBtn");
 
-    const summary = document.getElementById("summary");
-    const changes = document.getElementById("changes");
-    const categories = document.getElementById("categories");
-    const effect = document.getElementById("effect");
+    const plainMeaning = document.getElementById("plainMeaning");
+    const actorResult = document.getElementById("actorResult");
+    const ruleStrengthResult = document.getElementById("ruleStrengthResult");
+    const scopeResult = document.getElementById("scopeResult");
+    const actionResult = document.getElementById("actionResult");
+    const timingResult = document.getElementById("timingResult");
+    const vagueResult = document.getElementById("vagueResult");
+    const effectResult = document.getElementById("effectResult");
 
-    function renderList(target, items) {
-      if (!items.length) {
-        target.innerHTML = '<div class="empty">None.</div>';
-        return;
-      }
-
-      const ul = document.createElement("ul");
-      items.forEach(item => {
-        const li = document.createElement("li");
-        li.textContent = item;
-        ul.appendChild(li);
-      });
-
-      target.innerHTML = "";
-      target.appendChild(ul);
+    function setText(target, text) {
+      target.textContent = text;
+      target.classList.remove("empty");
     }
 
-    compareBtn.addEventListener("click", () => {
-      const original = originalText.value.trim();
-      const revised = revisedText.value.trim();
+    function resetField(target, text) {
+      target.textContent = text;
+      target.classList.add("empty");
+    }
 
-      if (!original || !revised) {
-        alert("Paste text into both boxes first.");
+    function analyzeLanguage() {
+      const text = inputText.value.trim();
+      const lower = text.toLowerCase();
+
+      if (!text) {
+        alert("Paste text first.");
         return;
       }
 
-      const foundChanges = [];
-      const foundCategories = [];
+      let actor = "Not clearly identified.";
+      let ruleStrength = "Not clearly identified.";
+      let scope = "Not clearly identified.";
+      let action = "Not clearly identified.";
+      let timing = "No timing or standard detected.";
+      let vague = "No obvious flexible wording detected.";
 
-      const originalLower = original.toLowerCase();
-      const revisedLower = revised.toLowerCase();
-
-      if (originalLower.includes("shall") && revisedLower.includes("may")) {
-        foundChanges.push("Changed 'shall' to 'may'");
-        foundCategories.push("Modality Shift");
+      if (lower.includes("agency")) {
+        actor = "The agency has the authority or responsibility.";
+      } else if (lower.includes("court")) {
+        actor = "The court has the authority or responsibility.";
+      } else if (lower.includes("judge")) {
+        actor = "The judge has the authority or responsibility.";
+      } else if (lower.includes("company")) {
+        actor = "The company has the authority or responsibility.";
+      } else if (lower.includes("employer")) {
+        actor = "The employer has the authority or responsibility.";
+      } else if (lower.includes("department")) {
+        actor = "The department has the authority or responsibility.";
+      } else if (lower.includes("applicant")) {
+        actor = "The applicant is one of the people affected by the text.";
+      } else if (lower.includes("employee")) {
+        actor = "The employee is one of the people affected by the text.";
       }
 
-      if (originalLower.includes("must") && revisedLower.includes("may")) {
-        foundChanges.push("Changed 'must' to 'may'");
-        foundCategories.push("Modality Shift");
+      if (lower.includes("shall") || lower.includes("must")) {
+        ruleStrength = "The action is required.";
+      } else if (lower.includes("may") || lower.includes("can")) {
+        ruleStrength = "The action is optional.";
+      } else if (lower.includes("should")) {
+        ruleStrength = "The action is recommended.";
       }
 
-      if (originalLower.includes("all") && revisedLower.includes("eligible")) {
-        foundChanges.push("Changed 'all' to 'eligible'");
-        foundCategories.push("Scope Change");
+      if (lower.includes("all employees")) {
+        scope = "This applies to all employees.";
+      } else if (lower.includes("eligible employees")) {
+        scope = "This applies only to eligible employees.";
+      } else if (lower.includes("all applicants")) {
+        scope = "This applies to all applicants.";
+      } else if (lower.includes("eligible applicants")) {
+        scope = "This applies only to eligible applicants.";
+      } else if (lower.includes("all individuals")) {
+        scope = "This applies to all individuals.";
+      } else if (lower.includes("individuals")) {
+        scope = "This applies to the individuals named in the text.";
       }
 
-      if (originalLower.includes("30 days") && revisedLower.includes("reasonable timeframe")) {
-        foundChanges.push("Changed 'within 30 days' to 'within a reasonable timeframe'");
-        foundCategories.push("Threshold / Standard Shift");
+      if (lower.includes("provide notice")) {
+        action = "The action is to provide notice.";
+      } else if (lower.includes("appear")) {
+        action = "The action is to appear.";
+      } else if (lower.includes("submit")) {
+        action = "The action is to submit something.";
+      } else if (lower.includes("report")) {
+        action = "The action is to report information.";
+      } else if (lower.includes("maintain")) {
+        action = "The action is to maintain something.";
+      } else if (lower.includes("notify")) {
+        action = "The action is to notify someone.";
       }
 
-      if (!foundChanges.length && original !== revised) {
-        foundChanges.push("Text changed, but no rule-based category matched yet.");
+      if (lower.includes("within 30 days")) {
+        timing = "There is a fixed 30-day deadline.";
+      } else if (lower.includes("within 60 days")) {
+        timing = "There is a fixed 60-day deadline.";
+      } else if (lower.includes("immediately")) {
+        timing = "The action must happen right away.";
+      } else if (lower.includes("reasonable timeframe")) {
+        timing = "The timing is flexible, not fixed.";
+      } else if (lower.includes("reasonable time")) {
+        timing = "The timing is flexible, not fixed.";
       }
 
-      summary.textContent =
-        original === revised
-          ? "The two versions appear to be the same."
-          : "The two versions are different and may contain structural language changes.";
+      const vagueTerms = [];
+      if (lower.includes("reasonable")) vagueTerms.push("reasonable");
+      if (lower.includes("appropriate")) vagueTerms.push("appropriate");
+      if (lower.includes("as determined by")) vagueTerms.push("as determined by");
+      if (lower.includes("where applicable")) vagueTerms.push("where applicable");
+      if (lower.includes("may")) vagueTerms.push("may");
 
-      renderList(changes, foundChanges);
-      renderList(categories, [...new Set(foundCategories)]);
+      if (vagueTerms.length) {
+        vague = "Flexible or vague wording detected: " + vagueTerms.join(", ") + ".";
+      }
 
-      effect.textContent =
-        foundCategories.length
-          ? "The wording changes may affect how the text is applied, interpreted, or enforced."
-          : "No structured operational effect detected yet.";
-    });
+      let plain = "This text sets out who can act, how strong the rule is, who it applies to, and whether the timing is fixed or flexible.";
+      let effect = "This wording affects who has power, who is covered, and how strictly the action must happen.";
 
-    clearBtn.addEventListener("click", () => {
-      originalText.value = "";
-      revisedText.value = "";
-      summary.innerHTML = '<div class="empty">No comparison yet.</div>';
-      changes.innerHTML = '<div class="empty">No detected changes yet.</div>';
-      categories.innerHTML = '<div class="empty">No categories yet.</div>';
-      effect.innerHTML = '<div class="empty">No operational effect yet.</div>';
-    });
+      if (
+        lower.includes("agency") &&
+        lower.includes("may") &&
+        lower.includes("eligible employees") &&
+        lower.includes("reasonable timeframe")
+      ) {
+        plain = "The agency is allowed, but not required, to notify certain employees, and the timing is flexible rather than fixed.";
+        effect = "The action is optional, applies only to a subset of employees, and does not have a strict deadline.";
+      } else if (
+        lower.includes("shall") &&
+        lower.includes("all employees") &&
+        lower.includes("within 30 days")
+      ) {
+        plain = "The action is required, it applies to all employees, and it must happen within 30 days.";
+        effect = "This creates a mandatory duty, applies broadly, and sets a fixed deadline.";
+      }
+
+      setText(plainMeaning, plain);
+      setText(actorResult, actor);
+      setText(ruleStrengthResult, ruleStrength);
+      setText(scopeResult, scope);
+      setText(actionResult, action);
+      setText(timingResult, timing);
+      setText(vagueResult, vague);
+      setText(effectResult, effect);
+    }
+
+    function clearResults() {
+      inputText.value = "";
+      resetField(plainMeaning, "The explanation will appear here.");
+      resetField(actorResult, "No signal yet.");
+      resetField(ruleStrengthResult, "No signal yet.");
+      resetField(scopeResult, "No signal yet.");
+      resetField(actionResult, "No signal yet.");
+      resetField(timingResult, "No signal yet.");
+      resetField(vagueResult, "No signal yet.");
+      resetField(effectResult, "Operational effect will appear here.");
+    }
+
+    analyzeBtn.addEventListener("click", analyzeLanguage);
+    clearBtn.addEventListener("click", clearResults);
   </script>
-</body><script>
-const inputText = document.getElementById("inputText");
-const analyzeBtn = document.getElementById("analyzeBtn");
-const clearBtn = document.getElementById("clearBtn");
-
-const plainMeaning = document.getElementById("plainMeaning");
-const actorResult = document.getElementById("actorResult");
-const ruleStrengthResult = document.getElementById("ruleStrengthResult");
-const scopeResult = document.getElementById("scopeResult");
-const actionResult = document.getElementById("actionResult");
-const timingResult = document.getElementById("timingResult");
-const vagueResult = document.getElementById("vagueResult");
-const effectResult = document.getElementById("effectResult");
-
-function analyzeLanguage() {
-  const text = inputText.value.trim();
-  const lower = text.toLowerCase();
-
-  if (!text) {
-    alert("Paste text first.");
-    return;
-  }
-
-  let actor = "Not clearly identified.";
-  let ruleStrength = "Not clearly identified.";
-  let scope = "Not clearly identified.";
-  let action = "Not clearly identified.";
-  let timing = "No timing or standard detected.";
-  let vague = "No obvious flexible wording detected.";
-  let plain = "Plain meaning not generated yet.";
-  let effect = "Operational effect not clear yet.";
-
-  if (lower.includes("agency")) actor = "The agency has the authority or responsibility.";
-  else if (lower.includes("court")) actor = "The court has the authority or responsibility.";
-  else if (lower.includes("company")) actor = "The company has the authority or responsibility.";
-  else if (lower.includes("employer")) actor = "The employer has the authority or responsibility.";
-
-  if (lower.includes("shall") || lower.includes("must")) {
-    ruleStrength = "The action is required.";
-  } else if (lower.includes("may") || lower.includes("can")) {
-    ruleStrength = "The action is optional.";
-  } else if (lower.includes("should")) {
-    ruleStrength = "The action is recommended.";
-  }
-
-  if (lower.includes("all employees")) {
-    scope = "This applies to all employees.";
-  } else if (lower.includes("eligible employees")) {
-    scope = "This applies only to eligible employees.";
-  } else if (lower.includes("individuals")) {
-    scope = "This applies to the individuals named in the text.";
-  }
-
-  if (lower.includes("provide notice")) {
-    action = "The action is to provide notice.";
-  } else if (lower.includes("appear")) {
-    action = "The action is to appear.";
-  } else if (lower.includes("submit")) {
-    action = "The action is to submit something.";
-  } else if (lower.includes("report")) {
-    action = "The action is to report information.";
-  }
-
-  if (lower.includes("within 30 days")) {
-    timing = "There is a fixed 30-day deadline.";
-  } else if (lower.includes("reasonable timeframe")) {
-    timing = "The timing is flexible, not fixed.";
-  } else if (lower.includes("immediately")) {
-    timing = "The action must happen right away.";
-  }
-
-  const vagueTerms = [];
-  if (lower.includes("reasonable")) vagueTerms.push("reasonable");
-  if (lower.includes("appropriate")) vagueTerms.push("appropriate");
-  if (lower.includes("as determined by")) vagueTerms.push("as determined by");
-  if (lower.includes("where applicable")) vagueTerms.push("where applicable");
-  if (lower.includes("may")) vagueTerms.push("may");
-
-  if (vagueTerms.length) {
-    vague = "Flexible or vague wording detected: " + vagueTerms.join(", ") + ".";
-  }
-
-  plain = "This text sets out who can act, how strong the rule is, who it applies to, and whether the timing is fixed or flexible.";
-  effect = "This wording affects who has power, who is covered, and how strictly the action must happen.";
-
-  plainMeaning.textContent = plain;
-  actorResult.textContent = actor;
-  ruleStrengthResult.textContent = ruleStrength;
-  scopeResult.textContent = scope;
-  actionResult.textContent = action;
-  timingResult.textContent = timing;
-  vagueResult.textContent = vague;
-  effectResult.textContent = effect;
-}
-
-function clearResults() {
-  inputText.value = "";
-  plainMeaning.textContent = "The explanation will appear here.";
-  actorResult.textContent = "";
-  ruleStrengthResult.textContent = "";
-  scopeResult.textContent = "";
-  actionResult.textContent = "";
-  timingResult.textContent = "";
-  vagueResult.textContent = "";
-  effectResult.textContent = "";
-}
-
-analyzeBtn.addEventListener("click", analyzeLanguage);
-clearBtn.addEventListener("click", clearResults);
-</script>
+</body>
 </html>
-<script>
-
-const originalText = document.getElementById("originalText");
-const revisedText = document.getElementById("revisedText");
-const compareBtn = document.getElementById("compareBtn");
-const clearBtn = document.getElementById("clearBtn");
-
-const summary = document.getElementById("summary");
-const changes = document.getElementById("changes");
-const categories = document.getElementById("categories");
-const effect = document.getElementById("effect");
-
-
-function renderList(target, items, emptyText) {
-
-  if (!items.length) {
-    target.innerHTML = `<div>${emptyText}</div>`;
-    return;
-  }
-
-  const ul = document.createElement("ul");
-
-  items.forEach(item => {
-    const li = document.createElement("li");
-    li.textContent = item;
-    ul.appendChild(li);
-  });
-
-  target.innerHTML = "";
-  target.appendChild(ul);
-}
-
-
-function compareTexts() {
-
-  const original = originalText.value.trim();
-  const revised = revisedText.value.trim();
-
-  if (!original || !revised) {
-    alert("Paste text into both boxes first.");
-    return;
-  }
-
-  const originalLower = original.toLowerCase();
-  const revisedLower = revised.toLowerCase();
-
-  const foundChanges = [];
-  const foundCategories = [];
-
-
-  if (originalLower.includes("shall") && revisedLower.includes("may")) {
-    foundChanges.push(`Modality change: "shall" → "may"`);
-    foundCategories.push("Modality Shift");
-  }
-
-  if (originalLower.includes("must") && revisedLower.includes("may")) {
-    foundChanges.push(`Modality change: "must" → "may"`);
-    foundCategories.push("Modality Shift");
-  }
-
-  if (originalLower.includes("all") && revisedLower.includes("eligible")) {
-    foundChanges.push(`Scope change: "all" → "eligible"`);
-    foundCategories.push("Scope Change");
-  }
-
-  if (originalLower.includes("within 30 days") && revisedLower.includes("reasonable timeframe")) {
-    foundChanges.push(`Threshold change: "within 30 days" → "within a reasonable timeframe"`);
-    foundCategories.push("Threshold / Standard Shift");
-  }
-
-
-  if (original !== revised && foundChanges.length === 0) {
-    foundChanges.push("Text changed, but no structural rule matched yet.");
-  }
-
-
-  summary.textContent =
-    original === revised
-      ? "The two versions appear to say the same thing."
-      : "The two versions are different and may change how the text works.";
-
-
-  renderList(changes, foundChanges, "No detected changes yet.");
-
-  renderList(categories, [...new Set(foundCategories)], "No categories yet.");
-
-
-  effect.textContent =
-    foundCategories.length
-      ? "These wording changes may affect how the text is applied, interpreted, or enforced."
-      : "No clear operational effect detected yet.";
-
-}
-
-
-function clearTexts() {
-
-  originalText.value = "";
-  revisedText.value = "";
-
-  summary.innerHTML = "No comparison yet.";
-  changes.innerHTML = "No detected changes yet.";
-  categories.innerHTML = "No categories yet.";
-  effect.innerHTML = "No operational effect yet.";
-
-}
-
-
-compareBtn.addEventListener("click", compareTexts);
-clearBtn.addEventListener("click", clearTexts);
-
-</script>
