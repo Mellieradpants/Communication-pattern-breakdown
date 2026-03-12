@@ -28,16 +28,15 @@ How to Use
 This can include a profile description, post, article excerpt, application text, or report.
 	2.	Paste the text into the tool.
 	3.	The tool will organize the text into structural sections such as:
+	The tool organizes the text into structural sections such as:
 
-	•	plain language translation
-	•	detected statements
-	•	detected actions
-	•	credentials and institutions
-	•	timeline signals
-	•	communication patterns
-	•	claim–signal alignment
-
-	4.	Review the structured output to see how the communication is organized and what signals appear in the language.
+- Plain language translation
+- Detected statements
+- Detected actions
+- Credentials and institutions
+- Timeline signals
+- Communication patterns
+- Claim–signal alignment
 
 The goal is not to judge the text, but to make its structure easier to see.
 
