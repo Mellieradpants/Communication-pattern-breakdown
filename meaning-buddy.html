@@ -1,256 +1,494 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MeaningBuddy</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MeaningBuddy</title>
+  <style>
+    :root{
+      --navy:#0f2a44;
+      --gold:#caa64b;
+      --bg:#f5f6f8;
+      --white:#ffffff;
+      --text:#1a1a1a;
+      --muted:#5b6470;
+      --border:#d6d9de;
+    }
 
-<style>
+    *{
+      box-sizing:border-box;
+    }
 
-body{
-  font-family:Arial, sans-serif;
-  background:#f5f6f8;
-  color:#1a1a1a;
-  max-width:950px;
-  margin:auto;
-  padding:30px;
-}
+    body{
+      font-family:Arial, sans-serif;
+      background:var(--bg);
+      color:var(--text);
+      max-width:980px;
+      margin:auto;
+      padding:28px;
+      line-height:1.45;
+    }
 
-h1{
-  color:#0f2a44;
-}
+    h1,h2,h3,p{
+      margin-top:0;
+    }
 
-h2{
-  color:#0f2a44;
-  margin-top:30px;
-}
+    .section{
+      background:var(--white);
+      border:3px solid var(--gold);
+      border-radius:12px;
+      padding:18px;
+      margin-bottom:22px;
+    }
 
-textarea{
-  width:100%;
-  height:120px;
-  padding:10px;
-  border-radius:6px;
-  border:1px solid #ccc;
-}
+    .section-title{
+      color:var(--navy);
+      margin-bottom:6px;
+    }
 
-button{
-  margin-top:10px;
-  padding:8px 14px;
-  border-radius:6px;
-  border:none;
-  background:#0f2a44;
-  color:white;
-  cursor:pointer;
-}
+    .helper{
+      color:var(--muted);
+      margin-bottom:10px;
+    }
 
-button:hover{
-  background:#173a5c;
-}
+    label{
+      display:block;
+      color:var(--navy);
+      font-weight:700;
+      margin-bottom:8px;
+    }
 
-.panel{
-  margin-top:25px;
-}
+    textarea, select{
+      width:100%;
+      border:1px solid var(--border);
+      border-radius:8px;
+      padding:12px;
+      font:inherit;
+      background:var(--white);
+      color:var(--text);
+    }
 
-.resultBox{
-  border:2px solid #0f2a44;
-  border-radius:8px;
-  padding:12px;
-  background:white;
-  margin-top:8px;
-}
+    textarea{
+      min-height:130px;
+      resize:vertical;
+    }
 
-.signals{
-  margin-top:10px;
-}
+    .controls{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top:12px;
+    }
 
-.signal{
-  background:white;
-  border-left:5px solid #caa64b;
-  padding:14px;
-  margin-top:14px;
-  border-radius:6px;
-}
+    button{
+      border:none;
+      border-radius:8px;
+      padding:10px 16px;
+      font:inherit;
+      font-weight:700;
+      cursor:pointer;
+      background:var(--gold);
+      color:var(--navy);
+    }
 
-.signal h3{
-  margin:0;
-  color:#0f2a44;
-}
+    button:hover{
+      filter:brightness(0.97);
+    }
 
-.scopeMeaning{
-  font-size:13px;
-  color:#666;
-  margin-top:4px;
-  padding-bottom:6px;
-  border-bottom:1px solid #ddd;
-}
+    .result-box{
+      border:2px solid var(--navy);
+      border-radius:10px;
+      background:var(--white);
+      padding:14px;
+      min-height:58px;
+    }
 
-.signalValue{
-  margin-top:8px;
-  font-size:15px;
-  font-weight:600;
-}
+    .placeholder{
+      color:var(--muted);
+      font-style:italic;
+    }
 
-.helperText{
-  color:#555;
-}
+    .signals-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit, minmax(250px, 1fr));
+      gap:14px;
+      margin-top:8px;
+    }
 
-</style>
+    .signal{
+      background:var(--white);
+      border:2px solid var(--navy);
+      border-radius:10px;
+      padding:14px;
+    }
+
+    .signal h3{
+      color:var(--navy);
+      font-size:16px;
+      margin-bottom:5px;
+    }
+
+    .signal-definition{
+      color:var(--muted);
+      font-size:13px;
+      margin-bottom:10px;
+      padding-bottom:7px;
+      border-bottom:1px solid var(--gold);
+    }
+
+    .signal-value{
+      color:var(--navy);
+      font-weight:700;
+      font-size:15px;
+    }
+  </style>
 </head>
-
 <body>
 
-<h1>MeaningBuddy</h1>
-<p>Turn formal, abstract, or legal wording into plain meaning.</p>
+  <section class="section">
+    <h1 class="section-title">MeaningBuddy</h1>
+    <p class="helper">Turn formal wording into plain meaning.</p>
+  </section>
 
-<div class="panel">
+  <section class="section">
+    <label for="inputText">Paste Text</label>
+    <textarea id="inputText" placeholder="Paste a sentence, paragraph, legal notice, policy text, or formal wording here..."></textarea>
 
-<label>Paste Text</label>
-<textarea id="inputText" placeholder="Paste a sentence, paragraph, legal notice, policy text, or formal wording here..."></textarea>
+    <div style="margin-top:12px;">
+      <label for="languageSelect">Explanation Language</label>
+      <select id="languageSelect">
+        <option value="english">English</option>
+        <option value="spanish">Spanish</option>
+        <option value="chinese">Chinese</option>
+        <option value="arabic">Arabic</option>
+        <option value="haitian-creole">Haitian Creole</option>
+        <option value="somali">Somali</option>
+        <option value="amharic">Amharic</option>
+        <option value="vietnamese">Vietnamese</option>
+        <option value="punjabi">Punjabi</option>
+        <option value="russian">Russian</option>
+        <option value="ukrainian">Ukrainian</option>
+        <option value="french">French</option>
+      </select>
+    </div>
 
-<br>
+    <div class="controls">
+      <button id="analyzeBtn">Analyze Language</button>
+      <button id="clearBtn">Clear</button>
+    </div>
+  </section>
 
-<button id="analyzeBtn">Analyze Language</button>
-<button id="clearBtn">Clear</button>
+  <section class="section">
+    <h2 class="section-title">Plain Meaning</h2>
+    <p class="helper">What this says plainly.</p>
+    <div id="plainMeaning" class="result-box">
+      <span class="placeholder">The plain explanation will appear here.</span>
+    </div>
+  </section>
 
-</div>
+  <section class="section">
+    <h2 class="section-title">Translated Explanation</h2>
+    <p class="helper">Plain meaning in the selected language.</p>
+    <div id="translatedMeaning" class="result-box">
+      <span class="placeholder">Translation will appear here when connected.</span>
+    </div>
+  </section>
 
+  <section class="section">
+    <h2 class="section-title">Language Signals</h2>
+    <p class="helper">What in the wording creates the meaning.</p>
+    <div id="signalsContainer" class="signals-grid">
+      <div class="result-box">
+        <span class="placeholder">Detected signals will appear here.</span>
+      </div>
+    </div>
+  </section>
 
-<div class="panel">
+  <section class="section">
+    <h2 class="section-title">Operational Effect</h2>
+    <p class="helper">What this means in practice.</p>
+    <div id="effectResult" class="result-box">
+      <span class="placeholder">Operational effect will appear here.</span>
+    </div>
+  </section>
 
-<h2>Plain Meaning</h2>
-<p class="helperText">What the text is saying in direct language.</p>
-<div id="plainMeaning" class="resultBox">The explanation will appear here.</div>
+  <script>
+    const inputText = document.getElementById("inputText");
+    const analyzeBtn = document.getElementById("analyzeBtn");
+    const clearBtn = document.getElementById("clearBtn");
+    const languageSelect = document.getElementById("languageSelect");
 
+    const plainMeaning = document.getElementById("plainMeaning");
+    const translatedMeaning = document.getElementById("translatedMeaning");
+    const signalsContainer = document.getElementById("signalsContainer");
+    const effectResult = document.getElementById("effectResult");
 
-<h2>Translated Explanation</h2>
-<p class="helperText">The translated explanation will appear here.</p>
-<div id="translatedMeaning" class="resultBox">
-Translation result will appear here.
-</div>
+    const signalDefinitions = {
+      actor: "Who has authority here.",
+      rule: "How strong the rule is.",
+      scope: "Who this applies to.",
+      action: "What the text says someone can, must, or should do.",
+      timing: "When it must happen, or how exact it is.",
+      vague: "Words that leave room for interpretation."
+    };
 
+    function setBoxText(target, text){
+      target.textContent = text;
+    }
 
-<h2>Language Signals</h2>
-<p class="helperText">The parts of the sentence that control how the wording works.</p>
+    function setPlaceholder(target, text){
+      target.innerHTML = `<span class="placeholder">${text}</span>`;
+    }
 
-<div class="signals">
+    function makeSignalCard(title, definition, value){
+      const card = document.createElement("div");
+      card.className = "signal";
 
-<div class="signal">
-<h3>Actor / Authority</h3>
-<p class="scopeMeaning">Who has the power or responsibility in the sentence.</p>
-<p id="actorResult" class="signalValue">No signal yet.</p>
-</div>
+      const heading = document.createElement("h3");
+      heading.textContent = title;
 
-<div class="signal">
-<h3>Rule Strength</h3>
-<p class="scopeMeaning">Whether the action is required, optional, or recommended.</p>
-<p id="ruleStrengthResult" class="signalValue">No signal yet.</p>
-</div>
+      const def = document.createElement("div");
+      def.className = "signal-definition";
+      def.textContent = definition;
 
-<div class="signal">
-<h3>Scope</h3>
-<p class="scopeMeaning">Who or what the rule applies to.</p>
-<p id="scopeResult" class="signalValue">No signal yet.</p>
-</div>
+      const val = document.createElement("div");
+      val.className = "signal-value";
+      val.textContent = value;
 
-<div class="signal">
-<h3>Action</h3>
-<p class="scopeMeaning">What action the text is describing.</p>
-<p id="actionResult" class="signalValue">No signal yet.</p>
-</div>
+      card.appendChild(heading);
+      card.appendChild(def);
+      card.appendChild(val);
 
-<div class="signal">
-<h3>Timing / Standard</h3>
-<p class="scopeMeaning">The deadline or level of flexibility.</p>
-<p id="timingResult" class="signalValue">No signal yet.</p>
-</div>
+      return card;
+    }
 
-<div class="signal">
-<h3>Vague / Flexible Language</h3>
-<p class="scopeMeaning">Words that leave room for interpretation.</p>
-<p id="vagueResult" class="signalValue">No signal yet.</p>
-</div>
+    function clearSignals(){
+      signalsContainer.innerHTML = `<div class="result-box"><span class="placeholder">Detected signals will appear here.</span></div>`;
+    }
 
-</div>
+    function pushSignal(detected, key, title, value){
+      detected.push({
+        key,
+        title,
+        definition: signalDefinitions[key],
+        value
+      });
+    }
 
+    function detectSignals(text){
+      const lower = text.toLowerCase();
+      const detected = [];
 
-<h2>Operational Effect</h2>
-<p class="helperText">What this wording means in practice.</p>
-<div id="effectResult" class="resultBox">
-Operational effect will appear here.
-</div>
+      if (lower.includes("agency")) {
+        pushSignal(detected, "actor", "Actor / Authority", "agency");
+      } else if (lower.includes("court")) {
+        pushSignal(detected, "actor", "Actor / Authority", "court");
+      } else if (lower.includes("judge")) {
+        pushSignal(detected, "actor", "Actor / Authority", "judge");
+      } else if (lower.includes("department")) {
+        pushSignal(detected, "actor", "Actor / Authority", "department");
+      } else if (lower.includes("employer")) {
+        pushSignal(detected, "actor", "Actor / Authority", "employer");
+      } else if (lower.includes("company")) {
+        pushSignal(detected, "actor", "Actor / Authority", "company");
+      } else if (lower.includes("officer")) {
+        pushSignal(detected, "actor", "Actor / Authority", "officer");
+      } else if (lower.includes("applicant")) {
+        pushSignal(detected, "actor", "Actor / Authority", "applicant");
+      }
 
-</div>
+      if (lower.includes("shall")) {
+        pushSignal(detected, "rule", "Rule Strength", "shall");
+      } else if (lower.includes("must")) {
+        pushSignal(detected, "rule", "Rule Strength", "must");
+      } else if (lower.includes("may")) {
+        pushSignal(detected, "rule", "Rule Strength", "may");
+      } else if (lower.includes("should")) {
+        pushSignal(detected, "rule", "Rule Strength", "should");
+      }
 
+      if (lower.includes("eligible employees")) {
+        pushSignal(detected, "scope", "Scope", "eligible employees");
+      } else if (lower.includes("all employees")) {
+        pushSignal(detected, "scope", "Scope", "all employees");
+      } else if (lower.includes("employees")) {
+        pushSignal(detected, "scope", "Scope", "employees");
+      } else if (lower.includes("eligible applicants")) {
+        pushSignal(detected, "scope", "Scope", "eligible applicants");
+      } else if (lower.includes("all applicants")) {
+        pushSignal(detected, "scope", "Scope", "all applicants");
+      } else if (lower.includes("applicants")) {
+        pushSignal(detected, "scope", "Scope", "applicants");
+      } else if (lower.includes("individuals")) {
+        pushSignal(detected, "scope", "Scope", "individuals");
+      } else if (lower.includes("noncitizens")) {
+        pushSignal(detected, "scope", "Scope", "noncitizens");
+      }
 
-<script>
+      if (lower.includes("provide notice")) {
+        pushSignal(detected, "action", "Action", "provide notice");
+      } else if (lower.includes("appear")) {
+        pushSignal(detected, "action", "Action", "appear");
+      } else if (lower.includes("submit")) {
+        pushSignal(detected, "action", "Action", "submit");
+      } else if (lower.includes("report")) {
+        pushSignal(detected, "action", "Action", "report");
+      } else if (lower.includes("maintain")) {
+        pushSignal(detected, "action", "Action", "maintain");
+      } else if (lower.includes("notify")) {
+        pushSignal(detected, "action", "Action", "notify");
+      }
 
-const inputText = document.getElementById("inputText");
-const analyzeBtn = document.getElementById("analyzeBtn");
-const clearBtn = document.getElementById("clearBtn");
+      if (lower.includes("within 30 days")) {
+        pushSignal(detected, "timing", "Timing / Standard", "within 30 days");
+      } else if (lower.includes("within 60 days")) {
+        pushSignal(detected, "timing", "Timing / Standard", "within 60 days");
+      } else if (lower.includes("immediately")) {
+        pushSignal(detected, "timing", "Timing / Standard", "immediately");
+      } else if (lower.includes("reasonable timeframe")) {
+        pushSignal(detected, "timing", "Timing / Standard", "reasonable timeframe");
+      } else if (lower.includes("reasonable time")) {
+        pushSignal(detected, "timing", "Timing / Standard", "reasonable time");
+      } else if (lower.includes("as soon as practicable")) {
+        pushSignal(detected, "timing", "Timing / Standard", "as soon as practicable");
+      }
 
-function analyzeLanguage(){
+      const vagueTerms = [];
+      if (lower.includes("reasonable")) vagueTerms.push("reasonable");
+      if (lower.includes("appropriate")) vagueTerms.push("appropriate");
+      if (lower.includes("as determined by")) vagueTerms.push("as determined by");
+      if (lower.includes("where applicable")) vagueTerms.push("where applicable");
 
-let text = inputText.value.toLowerCase();
+      if (vagueTerms.length) {
+        pushSignal(detected, "vague", "Vague / Flexible Language", vagueTerms.join(", "));
+      }
 
-let actor="No signal detected";
-let rule="No signal detected";
-let scope="No signal detected";
-let action="No signal detected";
-let timing="No signal detected";
-let vague="No signal detected";
+      return detected;
+    }
 
-if(text.includes("agency")) actor="agency";
-if(text.includes("court")) actor="court";
-if(text.includes("judge")) actor="judge";
+    function mapSignals(signals){
+      const map = {};
+      signals.forEach(signal => {
+        map[signal.key] = signal.value;
+      });
+      return map;
+    }
 
-if(text.includes("shall")) rule="shall";
-if(text.includes("must")) rule="must";
-if(text.includes("may")) rule="may";
+    function actionToPlain(action){
+      if (action === "provide notice") return "notify";
+      return action;
+    }
 
-if(text.includes("employees")) scope="employees";
-if(text.includes("applicants")) scope="applicants";
+    function ruleToPlain(rule){
+      if (rule === "shall" || rule === "must") return "must";
+      if (rule === "may") return "can";
+      if (rule === "should") return "should";
+      return "";
+    }
 
-if(text.includes("provide notice")) action="provide notice";
-if(text.includes("submit")) action="submit";
+    function buildPlainMeaning(signals){
+      const map = mapSignals(signals);
+      const parts = [];
 
-if(text.includes("within 30 days")) timing="within 30 days";
-if(text.includes("reasonable")) timing="reasonable timeframe";
+      if (map.actor) parts.push(capitalize(map.actor));
+      if (map.rule) parts.push(ruleToPlain(map.rule));
+      if (map.action) parts.push(actionToPlain(map.action));
+      if (map.scope) parts.push(map.scope);
 
-if(text.includes("reasonable") || text.includes("appropriate")) vague="flexible wording detected";
+      let sentence = parts.join(" ").replace(/\s+/g, " ").trim();
 
-document.getElementById("actorResult").innerText=actor;
-document.getElementById("ruleStrengthResult").innerText=rule;
-document.getElementById("scopeResult").innerText=scope;
-document.getElementById("actionResult").innerText=action;
-document.getElementById("timingResult").innerText=timing;
-document.getElementById("vagueResult").innerText=vague;
+      if (!sentence) {
+        return "No plain meaning generated.";
+      }
 
-document.getElementById("plainMeaning").innerText="Plain explanation generated from detected signals.";
+      if (map.timing === "reasonable timeframe" || map.timing === "reasonable time") {
+        sentence += ". The timing is not exact";
+      } else if (map.timing) {
+        sentence += `. Timing: ${map.timing}`;
+      }
 
-document.getElementById("effectResult").innerText="Operational meaning based on rule strength and scope.";
+      if (!sentence.endsWith(".")) sentence += ".";
+      return sentence;
+    }
 
-}
+    function buildOperationalEffect(signals){
+      const map = mapSignals(signals);
+      const parts = [];
 
-function clearResults(){
+      if (map.rule === "shall" || map.rule === "must") {
+        parts.push("This creates a required action");
+      } else if (map.rule === "may") {
+        parts.push("This creates an optional action");
+      } else if (map.rule === "should") {
+        parts.push("This creates a recommended action");
+      }
 
-inputText.value="";
+      if (map.scope) {
+        parts.push(`It applies to ${map.scope}`);
+      }
 
-document.getElementById("actorResult").innerText="No signal yet.";
-document.getElementById("ruleStrengthResult").innerText="No signal yet.";
-document.getElementById("scopeResult").innerText="No signal yet.";
-document.getElementById("actionResult").innerText="No signal yet.";
-document.getElementById("timingResult").innerText="No signal yet.";
-document.getElementById("vagueResult").innerText="No signal yet.";
+      if (map.timing === "reasonable timeframe" || map.timing === "reasonable time" || map.timing === "as soon as practicable") {
+        parts.push("The timing is flexible");
+      } else if (map.timing) {
+        parts.push(`The timing standard is ${map.timing}`);
+      }
 
-document.getElementById("plainMeaning").innerText="The explanation will appear here.";
-document.getElementById("effectResult").innerText="Operational effect will appear here.";
+      if (map.vague) {
+        parts.push("The wording leaves room for interpretation");
+      }
 
-}
+      if (!parts.length) {
+        return "No operational effect extracted.";
+      }
 
-analyzeBtn.addEventListener("click", analyzeLanguage);
-clearBtn.addEventListener("click", clearResults);
+      return parts.join(". ") + ".";
+    }
 
-</script>
+    function capitalize(str){
+      return str.charAt(0).toUpperCase() + str.slice(1);
+    }
 
+    function renderSignals(signals){
+      signalsContainer.innerHTML = "";
+
+      if (!signals.length) {
+        signalsContainer.innerHTML = `<div class="result-box"><span class="placeholder">No signals detected.</span></div>`;
+        return;
+      }
+
+      signals.forEach(signal => {
+        signalsContainer.appendChild(
+          makeSignalCard(signal.title, signal.definition, signal.value)
+        );
+      });
+    }
+
+    function analyzeLanguage(){
+      const text = inputText.value.trim();
+
+      if (!text) {
+        alert("Paste text first.");
+        return;
+      }
+
+      const signals = detectSignals(text);
+
+      setBoxText(plainMeaning, buildPlainMeaning(signals));
+      setPlaceholder(translatedMeaning, `Translation will appear here for ${languageSelect.value}.`);
+      renderSignals(signals);
+      setBoxText(effectResult, buildOperationalEffect(signals));
+    }
+
+    function clearResults(){
+      inputText.value = "";
+      setPlaceholder(plainMeaning, "The plain explanation will appear here.");
+      setPlaceholder(translatedMeaning, "Translation will appear here when connected.");
+      clearSignals();
+      setPlaceholder(effectResult, "Operational effect will appear here.");
+    }
+
+    analyzeBtn.addEventListener("click", analyzeLanguage);
+    clearBtn.addEventListener("click", clearResults);
+  </script>
 </body>
 </html>
